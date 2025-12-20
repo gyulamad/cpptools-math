@@ -1,4 +1,4 @@
-#include "../../misc/EXTERN.hpp"          // for EXTERN
+#include "../../misc/EXTERN.hpp"
 #include "../Scaling.hpp"
 
 // Linear scaling (no transformation)
@@ -13,4 +13,4 @@ public:
     }
 };
 
-EXTERN(LinearScaling)
+EXTERN(LinearScaling, (), ())

@@ -1,6 +1,5 @@
 #include "../../misc/EXTERN.hpp"
 #include "../Scaling.hpp"
-
 #include <cmath>
 
 using namespace std;
@@ -17,4 +16,4 @@ public:
     }
 };
 
-EXTERN(LOG_ALERTrithmicScaling)
+EXTERN(LOG_ALERTrithmicScaling, (), ())

@@ -1,9 +1,5 @@
 #pragma once
 
-#include <vector>
-#include <cmath>
-#include "../misc/ERROR.hpp"
-
 using namespace std;
 
 template<typename T>

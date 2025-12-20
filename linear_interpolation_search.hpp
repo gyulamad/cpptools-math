@@ -1,10 +1,8 @@
 #pragma once
 
-#include <algorithm>                  // for max
-#include <vector>
 #include <functional>
-#include "linear_interpolation.hpp"
 #include "../misc/ERROR.hpp"
+#include "linear_interpolation.hpp"
 
 using namespace std;
 
@@ -52,8 +50,6 @@ size_t linear_interpolation_search(
 }
 
 #ifdef TEST
-
-#include "../misc/str_contains.hpp"
 
 // Helper struct for testing
 struct test_linear_interpolation_search_TestData {

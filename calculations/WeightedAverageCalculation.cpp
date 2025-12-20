@@ -1,8 +1,7 @@
-#include <string>                 // for operator==, string
-#include <vector>                 // for vector
-#include "../Calc.hpp"            // for Calc
-#include "../Calculation.hpp"     // for Calculation
-#include "../../misc/EXTERN.hpp"          // for EXTERN
+#include <string> 
+#include "../Calculation.hpp"
+#include "../Calc.hpp"
+#include "../../misc/EXTERN.hpp"
 
 class WeightedAverageCalculation: public Calculation<float> {
 public:
@@ -44,4 +43,4 @@ protected:
     vector<float> values;
 };
 
-EXTERN(WeightedAverageCalculation)
+EXTERN(WeightedAverageCalculation, (), ())

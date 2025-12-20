@@ -14,4 +14,4 @@ public:
     }
 };
 
-EXTERN(NormalizedScaling)
+EXTERN(NormalizedScaling, (), ())
