@@ -3,7 +3,7 @@
 #include "../Calc.hpp"
 #include "../../misc/EXTERN.hpp"
 
-class WeightedAverageCalculation: public Calculation<float> {
+class WeightedAverageCalculation: public CalculationT<float> {
 public:
     WeightedAverageCalculation() {}
     virtual ~WeightedAverageCalculation() {}
@@ -13,7 +13,7 @@ public:
     }
 
     void onReload() override {
-        this->params = inifile;
+        // this->params = inifile;
     }
 
     void start() override {
@@ -23,7 +23,7 @@ public:
     }
 
     void process(const string& key, float value) override {
-        float weighted = value * params.get<float>(key);
+        float weighted = value * get<float>(key, "weights");
         if (weighted < 0) negative = true;
         values.push_back(weighted);
         count++;
@@ -37,7 +37,7 @@ public:
     }
 
 protected:
-    IniFile params;
+    // IniFile params;
     bool negative = false;
     int count = 0;
     vector<float> values;
