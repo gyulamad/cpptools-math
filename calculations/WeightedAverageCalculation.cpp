@@ -1,11 +1,26 @@
 #include <string> 
 #include "../Calculation.hpp"
 #include "../Calc.hpp"
-#include "../../misc/EXTERN.hpp"
 
 class WeightedAverageCalculation: public CalculationT<float> {
 public:
-    WeightedAverageCalculation() {}
+    WeightedAverageCalculation(
+        const string& inifname, 
+        bool load, // = false, 
+        bool createIfNotExists,
+        bool throwsIfNotExists,
+        bool warnsIfNotExists,
+        bool verbose
+    ):
+        CalculationT<float>(
+            inifname,
+            load,
+            createIfNotExists,
+            throwsIfNotExists,
+            warnsIfNotExists,
+            verbose
+        )
+    {}
     virtual ~WeightedAverageCalculation() {}
     
     void onLoad() override {
@@ -43,4 +58,4 @@ protected:
     vector<float> values;
 };
 
-EXTERN(WeightedAverageCalculation, (), ())
+EXTERN_CALCULATION(WeightedAverageCalculation)
