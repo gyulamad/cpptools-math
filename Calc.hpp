@@ -11,56 +11,56 @@ class Calc {
 public:
 
     // Calculate sum
-    static T sum(const vector<T>& values) {
+    static T sum(const vector<T>& values, bool skip_nans) {
         T sum = 0;
         for (const T& v : values) sum += v;
-        if (isnan(sum))
+        if (!skip_nans && isnan(sum))
             throw ERROR("Invalid: Calculate sum");
         return sum;
     }
     
     // Calculate mean
-    static T mean(const vector<T>& values) {
+    static T mean(const vector<T>& values, bool skip_nans) {
         if (values.empty())
-            throw ERROR("Not values to calculate mean"); 
-        T mean = sum(values) / values.size();
-        if (isnan(mean))
-            throw ERROR("Invalid: Calculate mean");       
+            throw ERROR("No values to calculate mean"); 
+        T mean = sum(values, skip_nans) / values.size();
+        if (!skip_nans && isnan(mean))
+            throw ERROR("Invalid: Calculate mean");      
         return mean;
     }
 
     // Calculate sum of Squared difference
-    static T sqrdsum(const vector<T>& values, T mean = NAN, T exponent = 2) {
+    static T sqrdsum(const vector<T>& values, T mean, T exponent, bool skip_nans) {
         if (exponent <= 0)
             throw ERROR("Invalid exponent (power) given: " + to_string(exponent));
         T sum = 0;
-        T avg = isnan(mean) ? Calc::mean(values) : mean; // TODO: bouble up
+        T avg = isnan(mean) ? Calc::mean(values, skip_nans) : mean; // TODO: bouble up
         for (const T& v : values) sum += pow(v - avg, exponent);
-        if (isnan(sum))
+        if (!skip_nans && isnan(sum))
             throw ERROR("Invalid: Calculate sum of Squared difference");
         return sum;
     }
     
     // Calculate variance (correction_factor: exponent (power) = 2 by default - sample variance, 1 - mean absolute deviation, 0.5 - root mean square (RMS) etc...)
-    static T variance(const vector<T>& values, T mean = NAN, T correction_factor = 2) {      
+    static T variance(const vector<T>& values, T mean, T correction_factor, bool skip_nans) {
         if (values.size() < 2)
             throw ERROR("Not enough values to calculate variance");        
-        T variance = sqrdsum(values, mean, correction_factor) / (values.size() - 1);
-        if (isnan(variance))
+        T variance = sqrdsum(values, mean, correction_factor, skip_nans) / (values.size() - 1);
+        if (!skip_nans && isnan(variance))
             throw ERROR("Invalid: Calculate variance");
         return variance;
     }
     
     // Calculate standard deviation
-    static T stdev(const vector<T>& values, T mean = NAN, T correction_factor = 2) {
-        T stdev = sqrt(abs(variance(values, mean, correction_factor)));
-        if (isnan(stdev))
+    static T stdev(const vector<T>& values, T mean, T correction_factor, bool skip_nans) {
+        T stdev = sqrt(abs(variance(values, mean, correction_factor, skip_nans)));
+        if (!skip_nans && isnan(stdev))
             throw ERROR("Invalid: Calculate standard deviation");
         return stdev;
     }
     
     // Calculate Sharpe ratio
-    static T sharpe(const vector<T>& returns, T risk_free_rate, T correction_factor = 2) {
+    static T sharpe(const vector<T>& returns, T risk_free_rate, T correction_factor, bool skip_nans) {
         size_t returns_size = returns.size();
         if (returns_size < 1)
             throw ERROR("No returns in context");
@@ -72,16 +72,16 @@ public:
         }
 
         // Calculate mean of returns
-        T mean = Calc::mean(excess_returns);
+        T mean = Calc::mean(excess_returns, skip_nans);
 
         // Calculate standard deviation of returns
-        T stdev = Calc::stdev(excess_returns, mean, correction_factor);
+        T stdev = Calc::stdev(excess_returns, mean, correction_factor, skip_nans);
         if (abs(stdev) < 1e-9)
             throw ERROR("Invalid: zero standard deviation"); 
 
         // Calculate Sharpe ratio
         T sharpe = mean / stdev;
-        if (isnan(sharpe))
+        if (!skip_nans && isnan(sharpe))
             throw ERROR("Invalid: Calculate sharpe"); 
         return sharpe;
     }

@@ -7,38 +7,7 @@
 template<typename T = float>
 class CalculationT: public Initializable {
 public:
-    // CalculationT(
-    //     bool createIfNotExists,
-    //     bool throwsIfNotExists,
-    //     bool warnsIfNotExists,
-    //     bool verbose
-    // ):
-    //     Initializable(
-    //         createIfNotExists,
-    //         throwsIfNotExists,
-    //         warnsIfNotExists,
-    //         verbose
-    //     )
-    // {}
-
-    CalculationT(
-        const string& inifname, 
-        bool load, // = false, 
-        bool createIfNotExists,
-        bool throwsIfNotExists,
-        bool warnsIfNotExists,
-        bool verbose
-    ):
-        Initializable(
-            inifname,
-            load,
-            createIfNotExists,
-            throwsIfNotExists,
-            warnsIfNotExists,
-            verbose
-        )
-    {}
-
+    using Initializable::Initializable;
     virtual ~CalculationT() {}
     virtual void start() = 0;
     virtual void process(const string& key, T value) = 0;

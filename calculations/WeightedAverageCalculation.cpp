@@ -2,25 +2,9 @@
 #include "../Calculation.hpp"
 #include "../Calc.hpp"
 
-class WeightedAverageCalculation: public CalculationT<float> {
+class WeightedAverageCalculation: public Calculation {
 public:
-    WeightedAverageCalculation(
-        const string& inifname, 
-        bool load, // = false, 
-        bool createIfNotExists,
-        bool throwsIfNotExists,
-        bool warnsIfNotExists,
-        bool verbose
-    ):
-        CalculationT<float>(
-            inifname,
-            load,
-            createIfNotExists,
-            throwsIfNotExists,
-            warnsIfNotExists,
-            verbose
-        )
-    {}
+    using Calculation::Calculation;
     virtual ~WeightedAverageCalculation() {}
     
     void onLoad() override {
@@ -45,7 +29,7 @@ public:
     }
 
     float result() override {
-        float sum = Calc<float>::sum(values);
+        float sum = Calc<float>::sum(values, true);
         float result = sum / count;
         if (negative && result > 0) result = -result;
         return result;
